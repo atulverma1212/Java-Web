@@ -11,7 +11,7 @@ import org.hibernate.SessionFactory;
 
 
 public class Manager {
-	   private static SessionFactory factory = (SessionFactory) Persistence.createEntityManagerFactory( "test" );
+	private static SessionFactory factory = (SessionFactory) Persistence.createEntityManagerFactory( "test" );
 	   
 //	   public static void main(String args[]) {
 //		   factory = (SessionFactory) Persistence.createEntityManagerFactory( "test" );
@@ -19,27 +19,24 @@ public class Manager {
 //	   }
 //	   
 	   @SuppressWarnings("unchecked")
-	public static void listEmployees() {
+	public static List<Employee> listEmployees() {
 		   EntityManager entityManager = factory.createEntityManager();
+		   List<Employee> emp = null;
 		   EntityTransaction tx = null;
 		   try {
 			   tx = entityManager.getTransaction();
-			   String hql = "Select name From Employee";
+			   String hql = "From Employee";
 			   tx.begin();
 			   Query query = entityManager.createQuery(hql);
-			   List<String> emp = query.getResultList();
+			   emp = query.getResultList();
 			   tx.commit();
-			   if(!emp.isEmpty()) {
-				   for(String name: emp) {
-					   System.out.println(name);
-				   }
-			   }
 		   } catch (Exception e) {
 			   if(tx!=null)
 				   tx.rollback();
 		   } finally {
 			   entityManager.close();
 		   }
+		   return emp;
 	   }
 
 	public static void addEmployee(String name,int salary, String city, String state, int pincode) {

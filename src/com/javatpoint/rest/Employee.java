@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="employee")
-public class Employee {
+public class Employee{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -27,6 +27,10 @@ public class Employee {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id", referencedColumnName="id")
 	private Address address;
+	
+	public int getId() {
+		return id;
+	}
 	
 	public Employee(String name, int salary) {
 		this.name=name;
@@ -51,7 +55,7 @@ public class Employee {
 	
 	public Employee() {}
 	
-	public int getSalaryr() { return salary; }
+	public int getSalary() { return salary; }
 	
 	public String getName() { return name; } 
 }
